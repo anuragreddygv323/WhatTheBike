@@ -1,6 +1,5 @@
-# Construct univariate time series models for all stations.
-
-# TODO: Add multivariate models.
+# Construct univariate and multivariate time series models for all stations.
+# TODO: Add diagnostics.
 
 import pandas as pd
 import statsmodels.api as sm
@@ -17,7 +16,8 @@ def load_data(file):
 
     return df
 
-def fit_models(df, pickle = None):
+
+def fit_univar_models(df, pickle = None):
     '''
     Return dictionary of AR models. Key are station_name (or station_id),
     values are statsmodels objects.
@@ -73,5 +73,9 @@ def make_univar_forecast(station, start_time, end_time, in_sample = False):
     plt.title(station, fontsize = 15)
 
     return 
+
+def fit_multivar_model(df, first, second, third):
+    return sm.tsa.VAR(df[[first, second, third]]).fit(maxlags = 24 * 7, trend = "ct")
+
 
 
