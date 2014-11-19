@@ -28,6 +28,8 @@ This will create the "hourly" dataframe used in "modeling.py"
 ### Usage
 1. In "modeling.py", load the dataframe (from pickle) into your script.
 2. Fit the univariate models with ```fit_univariate_models```
+3. Make a univariate forecast with ```make_univariate_forecast```. Save the forecasts in a variable.
+4. Plot the forecasts with ```make_univar_fc_plot```.
 
 
 [Data Challenge]:http://www.bayareabikeshare.com/datachallenge
