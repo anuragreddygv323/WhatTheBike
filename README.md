@@ -27,7 +27,7 @@ This will create the "hourly" dataframe used in "modeling.py"
 
 ### Usage
 1. In "modeling.py", load the dataframe (from pickle) into your script.
-2. Fit the univariate models with ```py fit_univariate_models```
+2. Fit the univariate models with ```fit_univariate_models```
 
 
 [Data Challenge]:http://www.bayareabikeshare.com/datachallenge
