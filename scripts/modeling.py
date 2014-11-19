@@ -46,17 +46,18 @@ def fit_univar_models(df, pickle = None):
 
 def make_univar_forecast(station, start_time, end_time, in_sample = False):
     '''
-    Plot number of available bikes along with one-hour-ahead forecast.
+    TODO: Remove this function!
+
+    Return dictionary of AR models. Keys are station_name (or station_id),
+    values are statsmodels objects.
 
     Arguments:
-    station (string or int): station name (string) or station id (int).
 
-    start_time (string): String of time to begin forecasting. 
-    Must be of form "201Y-MM-DD HH:MM:SS"
+    df (Pandas dataframe): multivariate time series dataframe.
 
-    end_time (string): String of time to end forecasting.
+    pickle (file, optional): opened file with write access.
 
-    in_sample (bool, optional): If True, forecasts are lagged 
+    Returns:
 
     '''
 
@@ -74,6 +75,33 @@ def make_univar_forecast(station, start_time, end_time, in_sample = False):
     plt.title(station, fontsize = 15)
 
     return 
+
+def make_univar_forecast(models, station, start_time, end_time, in_sample=False):
+    '''
+
+    '''
+    model = models[station]
+    return model.predict(start_time, end_time, dynamic= not in_sample)
+
+def make_univar_fc_plot(df, station, fc):
+    '''
+
+    '''
+    
+    start_time = fc.index.min()
+    end_time = fc.index.max()
+    
+    fig, ax = plt.subplots(figsize = (14, 10))
+    df.ix[start_time : end_time, station].plot(ax=ax, label="Actual")
+    fc.plot(ax = ax, label = "Forecast", style= "--", lw = 2, color="red")
+    
+    plt.legend(loc = 4, fontsize = 16)
+    plt.ylim(0, df[station].max() + 1)
+    plt.ylabel("Bikes Available", fontsize = 14)
+    plt.title(station, fontsize = 15)
+    ax.grid(False)
+
+    return
 
 
 def fit_multivar_model(df, first, second, third):
