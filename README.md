@@ -18,7 +18,17 @@ Installation consists of building the dataframe (called "hourly") and then using
 
 Required Python packages are Pandas and statsmodels.
 
-To install: download the raw data from the [Data Challenge].
+To install: 
+
+1. Download the zipped data folder from the [Data Challenge].
+2. Unzip the folder.
+3. Call "data_processing.py" from the same directory as the unzipped data.
+This will create the "hourly" dataframe used in "modeling.py"
+
+### Usage
+1. In "modeling.py", load the dataframe (from pickle) into your script.
+2. Fit the univariate models with ```py fit_univariate_models```
+
 
 [Data Challenge]:http://www.bayareabikeshare.com/datachallenge
 

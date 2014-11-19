@@ -7,10 +7,10 @@ from matplotlib import pyplot as plt
 import cPickle
 import sys
 
-def load_data(file):
+def load_data(path):
     '''
     Load Pandas dataframe of hourly station data from pickle.
-    11Drops stations with incomplete data.
+    Drops stations with incomplete data.
     '''
     df = pd.read_pickle(path)
     df = df.drop(df.columns[-3:], axis = 1)

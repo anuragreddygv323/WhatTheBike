@@ -75,7 +75,7 @@ def make_hourly_df(merged, use_station_names = True, pickle = None):
         return hourly
 
 if __name__ == "__main__":
-    make_merged_df("201402_rebalancing_data.csv")
-    make_hourly_df("201402_station_data.csv")
+    merged = make_merged_df("201402_rebalancing_data.csv")
+    make_hourly_df("201402_station_data.csv", pickle="hourly.pkl")
 
     
