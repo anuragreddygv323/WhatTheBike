@@ -9,7 +9,8 @@ import sys
 
 def load_data(file):
     '''
-    Load Pandas dataframe from pickle.
+    Load Pandas dataframe of hourly station data from pickle.
+    11Drops stations with incomplete data.
     '''
     df = pd.read_pickle(path)
     df = df.drop(df.columns[-3:], axis = 1)
@@ -19,7 +20,7 @@ def load_data(file):
 
 def fit_univar_models(df, pickle = None):
     '''
-    Return dictionary of AR models. Key are station_name (or station_id),
+    Return dictionary of AR models. Keys are station_name (or station_id),
     values are statsmodels objects.
 
     Arguments:
@@ -74,8 +75,28 @@ def make_univar_forecast(station, start_time, end_time, in_sample = False):
 
     return 
 
+
 def fit_multivar_model(df, first, second, third):
     return sm.tsa.VAR(df[[first, second, third]]).fit(maxlags = 24 * 7, trend = "ct")
 
+
+
+def multivar_forecast(var, start_, end_, steps_ahead=1):
+    y = pd.DataFrame(var.y, index=var.dates)
+    ind = pd.tseries.index.DatetimeIndex(freq="H", start=start_, end=end_)
+    preds = pd.DataFrame(columns=var.names, index=ind)
+    for time in ind:
+        preds.ix[time] = var.forecast(y.ix[:(time - steps_ahead)].values, steps=steps_ahead)[-1]
+        
+    return preds
+
+
+def make_multivar_fc_plot(df, fc):
+    fig, ax = plt.subplots(figsize=(16, 12))
+    df.ix[fc.index, fc.columns].plot(ax = ax, color = ["r", "b", "g"]);
+    fc.plot(ax = ax, style="--", lw=2, color = ["r", "b", "g"])
+    ax.legend(list(fc.columns) + ["forecast"] * 3, loc=4, fontsize=16)
+    ax.grid(False)
+    return
 
 
